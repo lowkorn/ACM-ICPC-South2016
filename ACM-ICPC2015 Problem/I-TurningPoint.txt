@@ -1,0 +1,67 @@
+import java.util.Scanner;
+
+public class TurningPoint {
+
+	public static void reportRespectiveTurn(double[] px, double[] py)
+	{
+		int n = px.length-2;
+
+		//position = sign( (Bx-Ax)*(Y-Ay) - (By-Ay)*(X-Ax) )
+		for(int i=0; i<n; i++) {
+			double t1 = (px[i+1]-px[i])*(py[i+2]-py[i]);
+			double t2 = (py[i+1]-py[i])*(px[i+2]-px[i]);
+			
+			double delta = t1-t2;
+
+			if(delta <= 0)
+				System.out.print("R");
+			else
+				System.out.print("L");
+		}
+		System.out.println();
+		// for(int i=0; i<n; i++) {
+		// 	double delta_y1 = py[i+1]-py[i];
+		// 	double delta_x1 = px[i+1]-px[i];
+
+		// 	double delta_y2 = py[i+2]-py[i+1];
+		// 	double delta_x2 = px[i+2]-px[i+1];
+
+		// 	double degree1 = Math.toDegrees(Math.atan2(delta_y1, delta_x1));
+		// 	// System.out.println("Degree 1: "+dRadian1);
+		// 	double degree2 = Math.toDegrees(Math.atan2(delta_y2, delta_x2));
+		// 	// System.out.println("Degree 2: "+dRadian2);
+
+		// 	double delta = degree2-degree1;
+		// 	// System.out.println(degree1+" : "+delta+" : "+degree2);
+		// 	if(delta <= 0)
+		// 		System.out.print("R");
+		// 	else
+		// 		System.out.print("L");
+		// }
+		// System.out.println();
+	}
+
+
+	public static void main(String args[]) 
+	{
+		Scanner input = new Scanner(System.in);
+		int t = Integer.parseInt(input.nextLine());
+
+		for(int i=0; i<t; i++) {
+			String line  = input.nextLine();
+			String[] tokens = line.split("\\s+");
+			
+			int n = tokens.length/2;
+			double[] px = new double[n];
+			double[] py = new double[n];
+
+			for(int j=0; j<n; j++) {
+				px[j] = Double.parseDouble(tokens[(2*j)]);
+				py[j] = Double.parseDouble(tokens[(2*j)+1]);
+			}
+
+			reportRespectiveTurn(px, py);
+		}
+
+	}
+}

@@ -1,0 +1,82 @@
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Burglary {
+
+	
+	public static void breakin(int B, int[] V, int[][] E)
+	{
+		int n = V.length;
+
+		int[][] rBS = new int[n][2];
+		rBS[0][0] = B;
+		rBS[0][1] = 0;
+
+		for(int i=0; i<n-1; i++) {
+			int u = E[i][0]-1;
+			int v = E[i][1]-1;
+			int p = E[i][2];
+			
+			rBS[v][0] = rBS[u][0]-p;
+			rBS[v][1] = rBS[u][1]+V[v];
+		}
+
+		Arrays.sort(rBS, new Comparator<int[]>(){
+			public int compare(int[] a, int[] b) {
+				return Integer.compare(a[1], b[1]);
+			} 
+		});
+
+		for(int i=n-1; i>=0; i--) {
+			if(rBS[i][0] >= 0) {
+				System.out.println(rBS[i][1]+" "+rBS[i][0]);
+				return;
+			}
+			// System.out.println((i+1)+" : "+rBS[i][0]+" : "+rBS[i][1]);
+		}
+
+
+	}
+
+	public static void main(String[] args) 
+	{
+		Scanner input = new Scanner(System.in);
+		int t = input.nextInt();
+
+		for(int i=0; i<t; i++) {
+			int n = input.nextInt();
+			int B = input.nextInt();
+			int[] V = new int[n];
+
+			for(int j=0; j<n; j++)
+				V[j] = input.nextInt();
+
+			int[][] E = new int[n-1][3];
+			for(int k=0; k<n-1; k++) {
+				int u = input.nextInt();
+				int v = input.nextInt();
+				if(u<v) {
+					E[k][0] = u;
+					E[k][1] = v;
+				} else {
+					E[k][0] = v;
+					E[k][1] = u;
+				}
+			}
+			for(int k=0; k<n-1; k++) {
+				E[k][2] = input.nextInt();
+			}
+
+			Arrays.sort(E, new Comparator<int[]>(){
+				public int compare(int[] a, int[] b) {
+					return Integer.compare(a[0], b[0]);
+				} 
+			});
+			
+			breakin(B, V, E);
+		}
+
+	}
+
+}

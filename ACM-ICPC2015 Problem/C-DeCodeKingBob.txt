@@ -1,0 +1,96 @@
+import java.util.Scanner;
+
+public class DeCodeKingBob {
+	public static void enCode(int encode_c[], int k)
+    {   float xx=(float) (26.00/k);
+ 	   double l=Math.ceil(xx);
+ 	   //System.out.println(l);
+ 	   int i,j,m=0,r=0,c=0;
+ 	   //int ch[][] =new int[x][k];
+ 	   int x=(int) l;
+ 	   int a[][] =new int[x][k];
+ 	   for(i=0;i<26;i++){
+ 		   a[r][c]=i;
+			   c++;
+ 		   if(i%k==k-1)
+ 		   {
+ 			   r=r+1;
+ 			   c=0;
+ 		   }
+ 		   
+ 			   
+ 	   }
+ 	   /*for(i=0;i<x;i++)
+ 	   {
+ 		   for(j=0;j<k;j++){
+ 			   System.out.print(a[i][j]+" ");
+ 		   }
+ 		   System.out.println("");
+ 	   }*/
+ 	   int z;
+ 	   for(i=k-1;i>=0;i--)
+ 	   {
+ 		   if(i>=26%k)
+ 			   z=x-1;
+ 		   else
+ 			   z=x;
+ 		   for(j=0;j<z;j++)
+ 		   {
+ 				   encode_c[m]=a[j][i];
+ 				   m++;
+ 			   
+ 		   }
+ 	   }
+ 	   
+    }
+	public static void deCodeKey(int [] encode_c,int [] decode_d)
+	{int i;
+		for(i=0;i<encode_c.length;i++)
+		{
+			decode_d[encode_c[i]]=i;
+		}
+		
+	}
+//----Main------
+	public static void main(String[] args) {
+		int encode_c[]= new int[26];
+		int decode_d[]=new int[26];
+		try{
+		Scanner input = new Scanner(System.in);
+		//System.out.println("Loop :");
+		int n = input.nextInt();
+		int keys;
+		int i,x;
+		char [] nn;
+		String s;
+		for(i=0;i<n;i++)
+		{   //System.out.println("Enter Key :");
+			keys=input.nextInt();
+			//System.out.println("Enter String :");
+			input.nextLine();
+			s=input.nextLine();
+			enCode(encode_c,keys);
+			deCodeKey(encode_c,decode_d);
+			nn=s.toCharArray();
+			for(int xx=0;xx<nn.length;xx++)
+        	{
+        		if(nn[xx]!=' ')
+        		{	x=nn[xx];
+        			int l=(x-97-keys+26)%26;
+        			//System.out.print(l+" ");
+        			
+        			nn[xx]=(char) (decode_d[l]+97);
+        			//System.out.print(nn[j][xx]+" ");
+        		}
+        		
+    	}
+    		System.out.println(nn);
+    		//System.out.println("");
+	}
+		}
+		catch (Exception e) {
+        	System.out.println(e);
+        }
+	
+}
+}

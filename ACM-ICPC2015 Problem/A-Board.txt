@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+
+public class Board {
+	
+	int boardSize;
+	int[][] block;
+	public Board( int bS, int[][] b)
+	{
+		boardSize = bS;
+		block = b;
+	}
+	
+	public String process()
+	{
+		int i, j, x, y;
+		int count = 0;
+		
+		int num = 0;
+		for(i = 0; i != boardSize; i++) {
+			for(j = 0; j!= boardSize; j++) {
+				// go right
+				num = block[i][j];
+				x = j + 1;
+				while(num < 10 && x < boardSize) {
+					num += block[i][x];
+					if(num == 10) {
+						count++;
+						break;
+					} else if (num > 10) {
+						break;
+					}
+					x++;
+				}
+				// go down
+				num = block[i][j];
+				y = i + 1;
+				while(num < 10 && y < boardSize) {
+					num += block[y][j];
+					if(num == 10) {
+						count++;
+						break;
+					} else if(num > 10) {
+						break;
+					}
+					y++;
+				}
+			}
+		}
+		return String.valueOf(count);
+		
+	}
+	public static void main(String args[])
+	{
+		Scanner scanner = new Scanner(System.in);
+		int numTestCase = Integer.parseInt(scanner.nextLine());
+		while(numTestCase > 0) {
+			int boardSize = Integer.parseInt(scanner.nextLine());
+			int block[][] = new int[boardSize][boardSize];
+			for(int i = 0; i != boardSize; i++) {
+				String line = scanner.nextLine();
+				String[] split = line.split("\\s+");
+				for(int j = 0; j != boardSize; j++) {
+					block[i][j] = Integer.parseInt(split[j]);
+				}
+			}
+			Board b = new Board(boardSize, block);
+			System.out.println(b.process());
+			numTestCase--;
+		}
+	}
+}

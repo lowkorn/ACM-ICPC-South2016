@@ -1,0 +1,28 @@
+========== Array lib ==========
+import java.util.Arrays;
+
+Arrays.sort(arr);  // sort array min-max
+Arrays.fill(arr,x); // fill x into all of index
+int x = Arrays.binarySearch(arr,key); // Search and count frequency of key
+
+
+
+
+========== String handle ==========
+
+// String buffer
+StringBuffer rev = new StringBuffer();
+rev.append(n); // append data
+rev.reverse(); // Reverse String
+rev.setLength(0); // clear String buffer
+str = rev.toString(); // String buffer to String normal
+int n = Integer.parseInt(rev.toString()); String buffer to int
+
+//Parse data
+int x = Integer.parseInt(str); // String to int
+String str = Integer.toString(int); // int to String
+
+========= Convert Data ===========
+
+char ch = 123 // integer to char
+char ch = (char)num  // int var to char

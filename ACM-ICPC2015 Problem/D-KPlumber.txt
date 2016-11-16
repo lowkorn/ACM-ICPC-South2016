@@ -1,0 +1,139 @@
+import java.util.Scanner;
+
+public class KPlumber {
+
+	public static void reportSafeState(int[][] grid)
+	{
+		int m = grid.length;
+		int n = grid[0].length;
+
+		Graph G = new Graph();
+		int k = 1;
+		
+		int[][][] nodeAt = new int[m][n][4];
+		//nodeAt[i][j][0] ~ up;
+		//nodeAt[i][j][1] ~ right;
+		//nodeAt[i][j][2] ~ down;
+		//nodeAt[i][j][3] ~ left;
+
+		for(int i=0; i<m; i++) {
+			for(int j=0; j<n; j++) {
+				if(grid[i][j] == 0) {
+					nodeAt[i][j][0] = 0;
+					nodeAt[i][j][1] = 0;
+					nodeAt[i][j][2] = 0;
+					nodeAt[i][j][3] = 0;
+				}
+				else if(grid[i][j] == 1) {
+					G.addNode(k);
+					nodeAt[i][j][0] = k;
+					nodeAt[i][j][1] = k;
+					nodeAt[i][j][2] = k;
+					nodeAt[i][j][3] = k;
+					k++;
+				}
+				else if(grid[i][j] == 2) {
+					G.addNode(k);
+					nodeAt[i][j][0] = k;
+					nodeAt[i][j][2] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][1] = k;
+					nodeAt[i][j][3] = k;
+					k++;
+				}
+				else if(grid[i][j] == 3) {
+					G.addNode(k);
+					nodeAt[i][j][0] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][1] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][2] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][3] = k;
+					k++;
+					G.addNode(k);
+					G.addEdge(k, nodeAt[i][j][0]);
+					G.addEdge(k, nodeAt[i][j][1]);
+					G.addEdge(k, nodeAt[i][j][2]);
+					G.addEdge(k, nodeAt[i][j][3]);
+					k++;
+				}
+				else if(grid[i][j] == 4) {
+					G.addNode(k);
+					nodeAt[i][j][0] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][1] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][2] = k;
+					k++;
+					G.addNode(k);
+					nodeAt[i][j][3] = k;
+					k++;
+				}
+			}
+		}
+
+		for(int i=0; i<m; i++) {
+			for(int j=0; j<n; j++) {
+				if(grid[i][j] == 0)
+					continue;
+
+				if(i > 0) {
+					if(nodeAt[i-1][j][2] > 0)
+						G.addEdge(nodeAt[i][j][0], nodeAt[i-1][j][2]);
+				}
+				if(i < m-1) {
+					if(nodeAt[i+1][j][0] > 0)
+						G.addEdge(nodeAt[i][j][2], nodeAt[i+1][j][0]);
+				}
+				if(j > 0) {
+					if(nodeAt[i][j-1][1] > 0)
+						G.addEdge(nodeAt[i][j][3], nodeAt[i][j-1][1]);
+				}
+				if(j < n-1) {
+					if(nodeAt[i][j+1][3] > 0)
+						G.addEdge(nodeAt[i][j][1], nodeAt[i][j+1][3]);
+				}
+
+			}
+		}
+
+		int v = G.size();
+		Graph M = MaximumMatching.findMaximumMatchingIn(G);
+		int l = 2*M.getSizeOfEdges();
+		
+		if(v == l)
+			System.out.println("YES");
+		else
+			System.out.println("NO");
+	}
+
+	public static void main(String args[])
+	{
+		Scanner input = new Scanner(System.in);
+		int t = input.nextInt();
+
+		for(int i=0; i<t; i++) {
+			int n = input.nextInt();
+			int m = input.nextInt();
+
+			int[][] grid = new int[m][n];
+			for(int j=0; j<m; j++) {
+				for(int k=0; k<n; k++) {
+					grid[j][k] = input.nextInt();
+				}
+			} 
+
+			reportSafeState(grid);
+		}
+
+
+
+	}
+}
